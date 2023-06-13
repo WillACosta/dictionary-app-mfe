@@ -1,25 +1,28 @@
 {
-  "name": "shell",
+  "name": "dictionary-mfe",
   "$schema": "../../node_modules/nx/schemas/project-schema.json",
   "projectType": "application",
   "prefix": "dictionary-app-mfe",
-  "sourceRoot": "apps/shell/src",
+  "sourceRoot": "apps/dictionary-mfe/src",
   "tags": [],
   "targets": {
     "build": {
       "executor": "@nx/angular:webpack-browser",
       "outputs": ["{options.outputPath}"],
       "options": {
-        "outputPath": "dist/apps/shell",
-        "index": "apps/shell/src/index.html",
-        "main": "apps/shell/src/main.ts",
+        "outputPath": "dist/apps/dictionary-mfe",
+        "index": "apps/dictionary-mfe/src/index.html",
+        "main": "apps/dictionary-mfe/src/main.ts",
         "polyfills": ["zone.js"],
-        "tsConfig": "apps/shell/tsconfig.app.json",
-        "assets": ["apps/shell/src/favicon.ico", "apps/shell/src/assets"],
-        "styles": ["apps/shell/src/styles.scss"],
+        "tsConfig": "apps/dictionary-mfe/tsconfig.app.json",
+        "assets": [
+          "apps/dictionary-mfe/src/favicon.ico",
+          "apps/dictionary-mfe/src/assets"
+        ],
+        "styles": ["apps/dictionary-mfe/src/styles.scss"],
         "scripts": [],
         "customWebpackConfig": {
-          "path": "apps/shell/webpack.config.js"
+          "path": "apps/dictionary-mfe/webpack.config.js"
         }
       },
       "configurations": {
@@ -38,7 +41,7 @@
           ],
           "outputHashing": "all",
           "customWebpackConfig": {
-            "path": "apps/shell/webpack.prod.config.js"
+            "path": "apps/dictionary-mfe/webpack.prod.config.js"
           }
         },
         "development": {
@@ -53,17 +56,17 @@
       "defaultConfiguration": "production"
     },
     "serve": {
-      "executor": "@nx/angular:module-federation-dev-server",
+      "executor": "@nx/angular:webpack-dev-server",
       "options": {
-        "port": 4200,
-        "publicHost": "http://localhost:4200"
+        "port": 4201,
+        "publicHost": "http://localhost:4201"
       },
       "configurations": {
         "production": {
-          "browserTarget": "shell:build:production"
+          "browserTarget": "dictionary-mfe:build:production"
         },
         "development": {
-          "browserTarget": "shell:build:development"
+          "browserTarget": "dictionary-mfe:build:development"
         }
       },
       "defaultConfiguration": "development"
@@ -71,21 +74,24 @@
     "extract-i18n": {
       "executor": "@angular-devkit/build-angular:extract-i18n",
       "options": {
-        "browserTarget": "shell:build"
+        "browserTarget": "dictionary-mfe:build"
       }
     },
     "lint": {
       "executor": "@nx/linter:eslint",
       "outputs": ["{options.outputFile}"],
       "options": {
-        "lintFilePatterns": ["apps/shell/**/*.ts", "apps/shell/**/*.html"]
+        "lintFilePatterns": [
+          "apps/dictionary-mfe/**/*.ts",
+          "apps/dictionary-mfe/**/*.html"
+        ]
       }
     },
     "test": {
       "executor": "@nx/jest:jest",
       "outputs": ["{workspaceRoot}/coverage/{projectRoot}"],
       "options": {
-        "jestConfig": "apps/shell/jest.config.ts",
+        "jestConfig": "apps/dictionary-mfe/jest.config.ts",
         "passWithNoTests": true
       },
       "configurations": {
@@ -97,9 +103,19 @@
     },
     "serve-static": {
       "executor": "@nx/web:file-server",
+      "defaultConfiguration": "development",
       "options": {
-        "buildTarget": "shell:build",
-        "port": 4200
+        "buildTarget": "dictionary-mfe:build",
+        "port": 4201,
+        "watch": false
+      },
+      "configurations": {
+        "development": {
+          "buildTarget": "dictionary-mfe:build:development"
+        },
+        "production": {
+          "buildTarget": "dictionary-mfe:build:production"
+        }
       }
     }
   }
